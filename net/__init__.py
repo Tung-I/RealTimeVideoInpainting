@@ -1,0 +1,1 @@
+from .DSTT import InpaintGenerator

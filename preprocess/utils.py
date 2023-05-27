@@ -50,12 +50,16 @@ def mkdir_if_missing(_dir):
         os.makedirs(_dir, exist_ok=True)
 
         
-def save_video(frames, save_path, fps=30):
+def save_video(save_path, frames, fps=30, resolution=(1024, 1024)):
     """
     Args:
         frames: list of np arrays
     """
-    imageio.mimwrite(save_path, frames, fps=fps, quality=8)
+    writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, resolution)
+    for frame in frames:
+        frame = frame.astype(np.uint8)
+        writer.write(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    writer.release()
 
 
 def read_video(video_path, is_color=True):

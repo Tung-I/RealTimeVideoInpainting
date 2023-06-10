@@ -74,7 +74,7 @@ def read_video(video_path, is_color=True):
         if not ret:
             break
         frame = frame if is_color else frame[:, :, 0]
-        frames.append(frame.astype(np.float32))
+        frames.append(frame.astype(np.uint8)[..., ::-1])
     cap.release()
     return frames, int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 

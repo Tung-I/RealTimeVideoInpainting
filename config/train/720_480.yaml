@@ -1,0 +1,58 @@
+main:
+    random_seed: 0
+    saved_dir: '/home/tungi/RealTimeVideoInpainting/checkpoints/l15/720_480'
+
+dataset:
+    name: 'TileDataset'
+    kwargs:
+        base_dir: '/home/tungi/RealTimeVideoInpainting/preprocess/videos/l15/tiles'
+        tile_id: '720_480'
+        im_size: [240, 240]
+            
+dataloader:
+    name: 'ImageLoader'
+    kwargs:
+        train_batch_size: 16
+        valid_batch_size: 1
+        shuffle: true
+        num_workers: 4
+
+net:
+    name: 'miniUNet'
+    kwargs:
+        in_channels: 3
+        out_channels: 3
+        num_features: [16, 32, 64]
+        
+losses:
+    - name: 'L1Loss'
+      weight: 1.0
+
+metrics:
+    - name: 'MSELoss'
+
+optimizer:
+    name: 'Adam'
+    kwargs:
+        lr: 0.005
+        weight_decay: 0
+        amsgrad: false
+
+logger:
+    name: 'ImageLogger'
+    kwargs:
+        dummy_input: [16, 1, 128, 128]
+
+monitor:
+    name: 'Monitor'
+    kwargs:
+        mode: 'min'
+        target: 'Loss'
+        saved_freq: 100
+        early_stop: 0
+
+trainer:
+    name: 'ImageTrainer'
+    kwargs:
+        device: 'cuda:0'
+        num_epochs: 40

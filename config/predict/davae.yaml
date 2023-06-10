@@ -1,0 +1,34 @@
+main:
+    random_seed: 0
+    saved_dir: '/home/tungi/conferencing/output'
+    loaded_path: '/home/tungi/conferencing/saved/davae_1e3/checkpoints/model_40.pth'
+
+dataset:
+    name: 'DAVAEDataset'
+    kwargs:
+        base_dir: '/home/tungi/datasets/MF_subset'
+        resolution: 512
+        view_range: 15
+        view_dist: 280
+        degree_per_view: 2
+            
+dataloader:
+    name: 'ImageLoader'
+    kwargs:
+        test_batch_size: 1
+        shuffle: false
+        num_workers: 0
+
+net:
+    name: 'DeepAppearanceVAE'
+    kwargs:
+        tex_size: 512
+
+metrics:
+    - name: 'PSNR'
+    - name: 'SSIM'
+
+predictor:
+    name: 'DAVAEPredictor'
+    kwargs:
+        device: 'cuda:0'

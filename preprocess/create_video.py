@@ -40,6 +40,7 @@ if __name__ == '__main__':
     gt_frames = []
     mask_frames = []
     sview_frames = []
+    depth_frames = []
 
     for mesh in tqdm(meshes):
     
